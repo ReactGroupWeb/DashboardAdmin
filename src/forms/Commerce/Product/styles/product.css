@@ -1,0 +1,12 @@
+.btn-featured, .bg-primary{
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+.product-img{
+    width: 100%;
+    padding: 15px 0px;
+}
+.description{
+    resize: none;
+    height: 132px !important;
+}

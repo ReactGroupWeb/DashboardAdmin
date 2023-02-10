@@ -1,0 +1,23 @@
+.bor-b{
+    border-bottom: 2px solid white;
+}
+.d-scroll-y{
+    overflow-x: hidden;
+}
+.m-pointer{
+    cursor: pointer;
+}
+.pixelated {
+    width: 40px;
+    height: 40px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;          /* Firefox */
+    image-rendering: -o-crisp-edges;            /* Opera */
+    image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
+    -ms-interpolation-mode: nearest-neighbor;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    background-color: #ff0000;
+}
