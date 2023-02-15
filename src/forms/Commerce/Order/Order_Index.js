@@ -77,9 +77,9 @@ export const Order_Index = () => {
                 {currentItems.map((order, i) => (
                   <tr key={order.id}>
                     <th>{i + 1 + indexOfFirstItem}</th>
-                    <td>$ {order.totalPrice}</td>
-                    <td>$ {parseFloat(order.totalPrice * 0.1).toFixed(2)}</td>
-                    <td>$ {order.totalPrice + order.totalPrice * 0.1}</td>
+                    <td>${order.subTotal.toFixed(2)}</td>
+                    <td>${order.tax.toFixed(2)}</td>
+                    <td>${order.totalPrice.toFixed(2)}</td>
                     <td>{order.user ? order.user.name : ""}</td>
                     <td>{order.user ? order.user.phone : ""}</td>
                     <td>
