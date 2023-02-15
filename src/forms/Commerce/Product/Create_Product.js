@@ -33,7 +33,7 @@ export const Create_Product = () => {
   };
   const handleInputChange = (event) => {
     setImg(URL.createObjectURL(event.target.files[0]));
-    setProducts({
+    setProducts({ 
       ...product,
       image: event.target.files[0],
     });
