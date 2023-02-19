@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-
 function Calendars() {
   const localizer = momentLocalizer(moment);
   // BigCalendar.momentLocalizer(moment)

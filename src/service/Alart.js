@@ -1,4 +1,4 @@
-import ApiService from "./api-service";
+import ApiController from "./Controller";
 import axios from "axios";
 import Swal from "sweetalert2";
 window.Swal = Swal;
@@ -22,7 +22,7 @@ class Alart {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        ApiService.delete(tb, id);
+        ApiController.delete(tb, id);
         this.refresh();
       }
     });
@@ -71,7 +71,7 @@ class Alart {
   alartLoginSuccess = () => {
     Swal.fire({
       icon: "success",
-      title: `Login Success`,
+      title: `Welcome Admin`,
     });
   };
   alartLoginError = (status, error) => {
@@ -103,7 +103,7 @@ class Alart {
       _("swal-input3") !== "" &&
       _("swal-input2") == _("swal-input3")
     )
-      ApiService.updatePassword("users/chPass", id, _("swal-input1"), {
+      ApiController.updatePassword("users/chPass", id, _("swal-input1"), {
         password: `${_("swal-input2")}`,
       });
     else if (_("swal-input2") !== _("swal-input3"))
@@ -139,24 +139,26 @@ class Alart {
       //   token: res.data.token,
       // };
       // localStorage.setItem("fgPass", JSON.stringify(item));
-      await Swal.fire({
-        title: "Change Password",
-        html:
-          '<input type="password" id="swal-input1" class="swal2-input" placeholder="Enter New Password">' +
-          '<input type="password" id="swal-input2" class="swal2-input" placeholder="Confirm New Password">',
-      });
-
-      if (
-        _("swal-input1") !== "" &&
-        _("swal-input2") !== "" &&
-        _("swal-input1") == _("swal-input2")
-      )
-        ApiService.updatePassword("users/chfgPass", res.data.user.id,"", {
-          password: `${_("swal-input1")}`,
+      if (res) {
+        await Swal.fire({
+          title: "Change Password",
+          html:
+            '<input type="password" id="swal-input1" class="swal2-input" placeholder="Enter New Password">' +
+            '<input type="password" id="swal-input2" class="swal2-input" placeholder="Confirm New Password">',
         });
-      else if (_("swal-input1") !== _("swal-input2"))
-        this.alartPasswordError(true);
-      else this.alartLoginEmpty("New Password");
+
+        if (
+          _("swal-input1") !== "" &&
+          _("swal-input2") !== "" &&
+          _("swal-input1") == _("swal-input2")
+        )
+          ApiController.updatePassword("users/chfgPass", res.data.user.id, "", {
+            password: `${_("swal-input1")}`,
+          });
+        else if (_("swal-input1") !== _("swal-input2"))
+          this.alartPasswordError(true);
+        else this.alartLoginEmpty("New Password");
+      }
     }
   };
 }

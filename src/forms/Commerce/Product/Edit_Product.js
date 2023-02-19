@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./styles/product.css";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 import Swal from "sweetalert2";
 window.Swal = Swal;
 
@@ -20,7 +20,7 @@ export const Edit_Product = () => {
   const [checked, setChecked] = useState(false);
   //getting all data from tbProduct and tbCategory
   useEffect(() => {
-    ApiService.get(tbProduct, params.id)
+    ApiController.get(tbProduct, params.id)
       .then((res) => {
         setProducts(res.data);
         setProductsCate(res.data.category == null ? "" : res.data.category);
@@ -29,7 +29,7 @@ export const Edit_Product = () => {
       .catch((err) => {
         console.log(err);
       });
-    ApiService.getAll(tbCategory)
+    ApiController.getAll(tbCategory)
       .then((res) => {
         setCategories(res.data);
       })
@@ -78,13 +78,13 @@ export const Edit_Product = () => {
   };
   //send data to api to update
   const submit = async () => {
-    ApiService.update(tbProduct, params.id, product);
+    ApiController.update(tbProduct, params.id, product);
     if (imgschanged) {
       const dataImage = new FormData();
       Array.from(imgsArray).map((image) => {
         return dataImage.append(`images`, image);
       });
-      ApiService.update(`${tbProduct}/gallery-images`, params.id, dataImage);
+      ApiController.update(`${tbProduct}/gallery-images`, params.id, dataImage);
     }
   };
   return (
@@ -112,7 +112,7 @@ export const Edit_Product = () => {
                         <Link
                           to="/product"
                           onClick={() => submit()}
-                          className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold"
+                          className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold text-light"
                         >
                           <i className="fas fa-tools me-2" />
                           Update
@@ -131,7 +131,7 @@ export const Edit_Product = () => {
                           type="text"
                           className="form-control"
                           id="name"
-                          value={product.name||""}
+                          value={product.name || ""}
                           placeholder="name"
                           onChange={(e) => {
                             setProducts({
@@ -148,7 +148,7 @@ export const Edit_Product = () => {
                           type="text"
                           className="form-control"
                           id="sku"
-                          value={product.sku||""}
+                          value={product.sku || ""}
                           placeholder="SKU"
                           onChange={(e) => {
                             setProducts({
@@ -168,7 +168,7 @@ export const Edit_Product = () => {
                           className="form-control"
                           id="regular_price"
                           placeholder="regular_price"
-                          value={product.regularPrice||""}
+                          value={product.regularPrice || ""}
                           onChange={(e) => {
                             setProducts({
                               ...product,
@@ -187,7 +187,7 @@ export const Edit_Product = () => {
                           className="form-control"
                           id="sale_price"
                           placeholder="sale price"
-                          value={product.salePrice||""}
+                          value={product.salePrice || ""}
                           onChange={(e) => {
                             setProducts({
                               ...product,
@@ -209,7 +209,7 @@ export const Edit_Product = () => {
                           className="form-control"
                           id="quantity"
                           placeholder="quantity"
-                          value={product.countInStock||""}
+                          value={product.countInStock || ""}
                           onChange={(e) => {
                             setProducts({
                               ...product,
@@ -227,7 +227,7 @@ export const Edit_Product = () => {
                         <textarea
                           className="form-control description"
                           placeholder="description"
-                          value={product.description||""}
+                          value={product.description || ""}
                           onChange={(e) => {
                             setProducts({
                               ...product,
@@ -249,7 +249,7 @@ export const Edit_Product = () => {
                           type="checkbox"
                           role="switch"
                           id="featured_product"
-                          value={product.isFeatured||""}
+                          value={product.isFeatured || ""}
                           checked={product.isFeatured}
                           onClick={() => {
                             setChecked(!checked);
@@ -283,12 +283,12 @@ export const Edit_Product = () => {
                             setProductCategory(e.target.value);
                             setProductsCate(e.target.value);
                           }}
-                          value={productCate._id||""}
+                          value={productCate._id || ""}
                         >
                           {categories.map((categorys) => (
                             <option
-                              key={`${categorys._id}`||""}
-                              value={`${categorys._id}`||""}
+                              key={`${categorys._id}` || ""}
+                              value={`${categorys._id}` || ""}
                             >
                               {categorys.name}
                             </option>
@@ -309,8 +309,7 @@ export const Edit_Product = () => {
                         >
                           <label
                             onClick={handleImageClick}
-                            className="form-control"
-                            style={{ cursor: "pointer" }}
+                            className="form-control mouse"
                           >
                             Select Image
                           </label>
@@ -346,8 +345,7 @@ export const Edit_Product = () => {
                         >
                           <label
                             onClick={handleGalleryClicks}
-                            className="form-control"
-                            style={{ cursor: "pointer" }}
+                            className="form-control mouse"
                           >
                             Select New Gallery (1-5 Files)
                           </label>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import ApiService from "../../service/api-service";
+import ApiController from "../../service/Controller";
 import Swal from "sweetalert2";
 window.Swal = Swal;
 
@@ -12,7 +12,7 @@ export const Edit_Slideshow = () => {
   const [changed, setChanged] = useState(false);
   const [img, setImg] = useState();
   useEffect(() => {
-    ApiService.get(tb, params.id).then((res) => setSliders(res.data));
+    ApiController.get(tb, params.id).then((res) => setSliders(res.data));
   }, []);
   const alart = () => {
     if (changed) {
@@ -44,7 +44,7 @@ export const Edit_Slideshow = () => {
     setChanged(true);
   };
 
-  const submit = async () => ApiService.update(tb, params.id, slider);
+  const submit = async () => ApiController.update(tb, params.id, slider);
   return (
     <>
       <div className="content open">
@@ -68,7 +68,7 @@ export const Edit_Slideshow = () => {
                       </Link>
                       {changed ? (
                         <Link
-                          className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold"
+                          className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold text-light"
                           onClick={() => submit()}
                           to="/slideshow"
                         >
@@ -85,7 +85,7 @@ export const Edit_Slideshow = () => {
                           type="text"
                           className="form-control"
                           id="title"
-                          value={slider.title||""}
+                          value={slider.title || ""}
                           onChange={(e) => {
                             setSliders({
                               ...slider,
@@ -104,7 +104,7 @@ export const Edit_Slideshow = () => {
                           type="text"
                           className="form-control"
                           id="mini_title"
-                          value={slider.miniTitle||""}
+                          value={slider.miniTitle || ""}
                           onChange={(e) => {
                             setSliders({
                               ...slider,
@@ -123,7 +123,7 @@ export const Edit_Slideshow = () => {
                           type="text"
                           className="form-control"
                           id="link"
-                          value={slider.url||""}
+                          value={slider.url || ""}
                           onChange={(e) => {
                             setSliders({
                               ...slider,
@@ -143,7 +143,7 @@ export const Edit_Slideshow = () => {
                         <textarea
                           className="form-control"
                           style={{ height: "200px" }}
-                          value={slider.description||""}
+                          value={slider.description || ""}
                           onChange={(e) => {
                             setSliders({
                               ...slider,
@@ -169,8 +169,7 @@ export const Edit_Slideshow = () => {
                     >
                       <label
                         onClick={handleClick}
-                        className="form-control"
-                        style={{ cursor: "pointer" }}
+                        className="form-control mouse"
                       >
                         Change Image
                       </label>

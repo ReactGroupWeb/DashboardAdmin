@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ApiService from "../../service/api-service";
+import ApiController from "../../service/Controller";
 import Alart from "../../service/Alart";
 
 export const Create_Slideshow = () => {
@@ -26,7 +26,7 @@ export const Create_Slideshow = () => {
     });
   };
   useEffect(() => {
-    ApiService.getLastOrder(tb)
+    ApiController.getLastOrder(tb)
       .then((res) => {
         setSliders({
           ...slider,
@@ -39,7 +39,7 @@ export const Create_Slideshow = () => {
   }, []);
   const submit = async () => {
     if (slider.title != "" || slider.description != "")
-      ApiService.create(tb, slider);
+      ApiController.create(tb, slider);
     else Alart.alartCreate("Slider", "Title and Description");
   };
   return (
@@ -174,8 +174,7 @@ export const Create_Slideshow = () => {
                         >
                           <label
                             onClick={handleClick}
-                            className="form-control"
-                            style={{ cursor: "pointer" }}
+                            className="form-control mouse"
                           >
                             Select Image
                           </label>

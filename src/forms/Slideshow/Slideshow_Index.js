@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ApiService from "../../service/api-service";
+import ApiController from "../../service/Controller";
 import Pagination from "../../components/Pagination";
 import Alart from "../../service/Alart";
 export const Slideshow_Index = () => {
@@ -15,14 +15,14 @@ export const Slideshow_Index = () => {
   const tb = "sliders";
   useEffect(() => {
     setReRender(false);
-    ApiService.getAll(tb).then((res) => setSliders(res.data));
+    ApiController.getAll(tb).then((res) => setSliders(res.data));
   }, [reRender]);
   const swapOrder = (Cid, Nid) => {
-    Nid != "Up" && Nid != "Down"
-      ? ApiService.updateOrder(tb, Cid, Nid)
-      : Alart.alartSwap(Nid);
-    setReRender(true);
-    // Alart.refresh();
+    if (Nid != "Up" && Nid != "Down") {
+      ApiController.updateOrder(tb, Cid, Nid);
+      setReRender(true);
+      Alart.refresh();
+    } else Alart.alartSwap(Nid);
   };
   const changeSliderPP = (e) => setitemsPerPage(e);
   return (
@@ -31,19 +31,10 @@ export const Slideshow_Index = () => {
         <div className="col-sm-12">
           <div className="bg-secondary rounded h-100 p-4">
             <div className="row">
-              <div className="col-md-4 col-6">
+              <div className="col-6">
                 <h3 className="fs-5">Slideshow</h3>
               </div>
-              <div className="col-md-4 col-6">
-                <form>
-                  <input
-                    className="form-control bg-dark border-0"
-                    type="search"
-                    placeholder="Search"
-                  />
-                </form>
-              </div>
-              <div className="col-md-4 col-12">
+              <div className="col-6">
                 <Link
                   to="/slideshow/create_slideshow"
                   className="btn btn-success btn-sm bg-success px-3 py-2 fw-bold float-md-end"
@@ -53,21 +44,21 @@ export const Slideshow_Index = () => {
                 </Link>
               </div>
             </div>
-            <table className="table">
+            <table className="table text-center text-md-start">
               <thead>
                 <tr>
-                  <th scope="col">Nº</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Event</th>
-                  <th scope="col">Order</th>
-                  <th scope="col">Actions</th>
+                  <th>Nº</th>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Event</th>
+                  <th>Order</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((slider, i) => (
                   <tr key={slider.id}>
-                    <th>{i + 1 + indexOfFirstItem}</th>
+                    <td>{i + 1 + indexOfFirstItem}</td>
                     <td>
                       <img src={slider.image} height="50px" />
                     </td>
@@ -76,9 +67,9 @@ export const Slideshow_Index = () => {
                     <td>{slider.order}</td>
                     <td>
                       <a
-                        className="btn btn-success btn-sm me-2"
+                        className="btn btn-success btn-sm m-2"
                         onClick={() => {
-                          ApiService.updateEnable(tb, `${slider.id}`);
+                          ApiController.updateEnable(tb, `${slider.id}`);
                           setReRender(true);
                         }}
                         title={`${slider.enable}`}
@@ -91,13 +82,13 @@ export const Slideshow_Index = () => {
                       </a>
                       <Link
                         to={`/slideshow/edit_slideshow/${slider.id}`}
-                        className="btn btn-warning btn-sm me-2"
+                        className="btn btn-warning btn-sm m-2 text-light"
                         title="Edit"
                       >
                         <i className="fas fa-tools me-2"></i>Edit
                       </Link>
                       <a
-                        className="btn btn-danger btn-sm me-2"
+                        className="btn btn-danger btn-sm m-2"
                         onClick={() => {
                           Alart.alartDelete(tb, `${slider.id}`);
                           setReRender(true);

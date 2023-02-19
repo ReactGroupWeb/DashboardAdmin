@@ -1,21 +1,20 @@
-import { React, useState} from "react";
+import { React, useState } from "react";
 import { NavLink, Link, Navigate } from "react-router-dom";
-import "./Sidebar.css";
-import ApiService from "../../service/api-service";
+import ApiController from "../../service/Controller";
 
 export const SideBar = (open) => {
   const [navigate, setNavigate] = useState(false);
   const token = localStorage.getItem("token");
   const item = token ? JSON.parse(token) : "";
   const Logout = () => {
-    if (token) ApiService.updateActive("users", item.user.id, { active: false });
-    localStorage.clear("token");
+    ApiController.updateActive("users", item.user.id, { active: false });
+    localStorage.removeItem("token");
     setNavigate(true);
   };
   if (navigate) return <Navigate to="/" />;
   return (
-    <div className={`sidebar ${open.open?"open":""} pe-4 pb-3 d-scroll-y`}>
-      <nav className="navbar bg-secondary navbar-dark">
+    <div className={`sidebar ${open.open ? "open" : ""} pe-4 pb-3 d-scroll-y bg-secondary`}>
+      <nav className="navbar navbar-dark">
         <Link to="/admin" className="navbar-brand mx-2 mb-3">
           <h3 className="text-primary">
             <i className="fa fa-user-edit me-2" />
@@ -36,12 +35,16 @@ export const SideBar = (open) => {
                 backgroundImage: token ? `url(${item.user.image})` : "",
               }}
             >
-              <div className={"bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"} />
+              <div
+                className={
+                  "bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"
+                }
+              />
             </div>
           </div>
           <div className="ms-3">
-            <h6 className="mb-0">{token?item.user.name:""}</h6>
-            <span>{token?item.user.isAdmin?"Admin":"User":""}</span>
+            <h6 className="mb-0">{token ? item.user.name : ""}</h6>
+            <span>{token ? (item.user.isAdmin ? "Admin" : "User") : ""}</span>
           </div>
         </div>
         <div className="navbar-nav w-100">
@@ -63,7 +66,7 @@ export const SideBar = (open) => {
               Commerce
             </a>
             <div className="nav-item dropdown-menu bg-transparent border-0">
-              <NavLink to="/product" className="nav-link dropdown-item bor-b">
+              <NavLink to="/product" className="nav-link dropdown-item bor-b ">
                 <i className="fas fa-archive me-2" />
                 Product
               </NavLink>
@@ -101,7 +104,7 @@ export const SideBar = (open) => {
             onClick={() => {
               Logout();
             }}
-            className="nav-item nav-link m-pointer"
+            className="nav-item nav-link mouse"
           >
             <i className="fas fa-sign-out-alt me-2" />
             Sign Out

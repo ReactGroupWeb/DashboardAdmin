@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 import Pagination from "../../../components/Pagination";
 import Alart from "../../../service/Alart";
 
@@ -18,7 +18,7 @@ export const Category_Index = () => {
   const tb = "categories";
 
   useEffect(() => {
-    ApiService.getAll(tb)
+    ApiController.getAll(tb)
       .then((res) => {
         setCategories(res.data);
       })
@@ -46,19 +46,19 @@ export const Category_Index = () => {
                 </Link>
               </div>
             </div>
-            <table className="table">
+            <table className="table text-center text-md-start">
               <thead>
                 <tr>
-                  <th scope="col">Nº</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Actions</th>
+                  <th>Nº</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((category, i) => (
                   <tr key={i}>
-                    <th scope="row">{i + 1 + indexOfFirstItem}</th>
+                    <td scope="row">{i + 1 + indexOfFirstItem}</td>
                     <td>
                       <img src={category.icon} width="45" />
                     </td>
@@ -66,7 +66,7 @@ export const Category_Index = () => {
                     <td>
                       <Link
                         to={`/category/edit_category/${category._id}`}
-                        className="btn btn-warning btn-sm me-2"
+                        className="btn btn-warning btn-sm me-2 text-light"
                         title="Edit Category"
                       >
                         <i className="fas fa-tools me-2"></i>Edit

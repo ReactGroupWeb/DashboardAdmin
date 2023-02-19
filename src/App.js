@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 
 import { BrowserRouter as Router , Routes, Route} from "react-router-dom";
@@ -35,6 +35,10 @@ import { Edit_User_Profile } from "./forms/Configurations/User/Edit_User_Profile
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  useEffect(()=>{
+    if (localStorage.getItem("DarkMode") == "false")
+      document.querySelector("body").setAttribute("dark-theme", "L");
+  },[])
   return (
   <Router>
     <Routes>
@@ -69,7 +73,7 @@ function App() {
       <Route path="/product/edit_product/:id" element={<ProtectedRoute><Edit_Product /></ProtectedRoute>}/>
 
       {/* Link for Order Detail */}
-      <Route path="/order/order_detail/:id" element={<ProtectedRoute><Order_Detail/></ProtectedRoute>}/>
+      <Route path="/order/order_detail/:id/:prevpage" element={<ProtectedRoute><Order_Detail/></ProtectedRoute>}/>
       
       {/* Link for User Profile */}
       <Route path="/profile/:id" element={<ProtectedRoute><Profile/></ProtectedRoute>}></Route>

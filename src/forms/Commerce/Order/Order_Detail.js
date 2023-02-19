@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 import DateLocal from "../../../service/DateLocal";
 export const Order_Detail = () => {
   const params = useParams();
@@ -8,7 +8,7 @@ export const Order_Detail = () => {
   const [order, setOrder] = useState([]);
   const [orderitems, setOrderItems] = useState([]);
   useEffect(() => {
-    ApiService.get("orders", params.id).then((res) => {
+    ApiController.get("orders", params.id).then((res) => {
       setOrder(res.data);
       setOrderItems(res.data.orderItems);
     });
@@ -38,11 +38,11 @@ export const Order_Detail = () => {
                 </div>
                 <div className="col-md-6">
                   <Link
-                    to="/order"
+                    to={`/${params.prevpage}`}
                     className="btn btn-success btn-sm bg-success px-3 py-2 fw-bold float-end"
                   >
                     <i className="fas fa-undo-alt me-2" />
-                    Back To Order
+                    Back To Previous Page
                   </Link>
                 </div>
               </div>

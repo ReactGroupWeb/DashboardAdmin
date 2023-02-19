@@ -4,8 +4,16 @@
     --secondary: #191C24;
     --light: #6C7293;
     --dark: #000000;
+    --white:#fff;
 }
 
+[dark-theme="L"]{
+    /* --primary: #0d6efd; */
+    --secondary: #fff;
+    --light: #191C24;
+    --dark: #c9c9c9;
+    --white:#000;
+}
 .back-to-top {
     position: fixed;
     display: none;
@@ -71,7 +79,7 @@
     width: 250px;
     height: 100vh;
     overflow-y: auto;
-    background: var(--secondary);
+    /* background: var(--secondary); */
     transition: 0.5s;
     z-index: 999;
 }
@@ -246,7 +254,7 @@
     padding: 10px;
     border-radius: 2px;
 }
-
+td{vertical-align: middle;}
 .bootstrap-datetimepicker-widget table td.active,
 .bootstrap-datetimepicker-widget table td.active:hover {
     background: var(--primary);
@@ -286,4 +294,30 @@
 .testimonial-carousel .owl-dot.active {
     background: var(--dark);
     border-color: var(--primary);
+}
+
+.mouse{cursor: pointer}
+span.carousel-control-prev-icon,
+span.carousel-control-next-icon {
+    background-color: black;
+    border-radius: 50%;
+    background-size: 80% !important;
+    background-position: center;
+}
+.bor-b{
+    border-bottom: 2px solid var(--white);
+}
+.bor-1{
+    border: 1px solid var(--white);
+}
+.d-scroll-y{
+    overflow-x: hidden;
+}
+.pixelated {
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    background-color: #ff0000;
 }

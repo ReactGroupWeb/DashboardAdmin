@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./styles/user.css";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 import Swal from "sweetalert2";
 window.Swal = Swal;
 export const Edit_User = () => {
@@ -13,7 +13,7 @@ export const Edit_User = () => {
   const [changed, setChanged] = useState(false);
   //getting all data from tbProduct and tbCategory
   useEffect(() => {
-    ApiService.get(tb, params.id)
+    ApiController.get(tb, params.id)
       .then((res) => {
         setUser(res.data);
       })
@@ -51,7 +51,7 @@ export const Edit_User = () => {
     setChanged(true);
   };
   //send data to api to update
-  const submit = async () => ApiService.update(tb, params.id, user);
+  const submit = async () => ApiController.update(tb, params.id, user);
   return (
     <div className="content open">
       <div className="container-fluid pt-4 px-4">
@@ -76,7 +76,7 @@ export const Edit_User = () => {
                       <Link
                         to="/user"
                         onClick={() => submit()}
-                        className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold"
+                        className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold text-light"
                       >
                         <i className="fas fa-tools me-2" />
                         Update
@@ -94,7 +94,7 @@ export const Edit_User = () => {
                         type="text"
                         className="form-control"
                         id="name"
-                        value={user.name||""}
+                        value={user.name || ""}
                         placeholder="name"
                         onChange={(e) => {
                           setChanged(true);
@@ -113,7 +113,7 @@ export const Edit_User = () => {
                         className="form-control"
                         id="email"
                         placeholder="email"
-                        value={user.email||""}
+                        value={user.email || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -133,7 +133,7 @@ export const Edit_User = () => {
                         className="form-control"
                         id="phone"
                         placeholder="phone"
-                        value={user.phone||""}
+                        value={user.phone || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -154,7 +154,7 @@ export const Edit_User = () => {
                           type="checkbox"
                           role="switch"
                           id="featured_product"
-                          value={user.isAdmin||""}
+                          value={user.isAdmin || ""}
                           checked={user.isAdmin}
                           onClick={() => {
                             setChecked(!checked);
@@ -182,7 +182,7 @@ export const Edit_User = () => {
                         className="form-control"
                         id="nationality"
                         placeholder="nationality"
-                        value={user.nationality||""}
+                        value={user.nationality || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -203,7 +203,7 @@ export const Edit_User = () => {
                         style={{ colorScheme: "dark" }}
                         id="date_of_birt"
                         placeholder="date_of_birt"
-                        value={user.DOB||""}
+                        value={user.DOB || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -221,7 +221,7 @@ export const Edit_User = () => {
                       <textarea
                         className="form-control company-address"
                         placeholder="address"
-                        value={user.address||""}
+                        value={user.address || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -250,8 +250,7 @@ export const Edit_User = () => {
                       >
                         <label
                           onClick={handleClick}
-                          className="form-control"
-                          style={{ cursor: "pointer" }}
+                          className="form-control mouse"
                         >
                           Select Image
                         </label>

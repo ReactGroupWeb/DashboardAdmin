@@ -12,7 +12,7 @@ const config = (e) =>
       Authorization: "Bearer " + item.token,
     },
   });
-class ApiService {
+class ApiController {
   getAll(tb) {
     return config(true).get(`/${tb}`);
   }
@@ -60,7 +60,7 @@ class ApiService {
   }
   // forgotPass(tb, data) {
   //   // console.log(data)
-    
+
   //   return (config(true)
   //   .post(`${tb}`, data)
   //   .catch((err) => {
@@ -70,4 +70,4 @@ class ApiService {
   // }
 }
 
-export default new ApiService();
+export default new ApiController();

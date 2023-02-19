@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 import Alart from "../../../service/Alart";
 import DateLocal from "../../../service/DateLocal";
 import Pagination from "../../../components/Pagination";
@@ -10,7 +10,7 @@ export const Order_Index = () => {
   const [reRender, setReRender] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState(5);
-  const [status, setStauts] = useState("All");
+  const [status, setStatus] = useState("All");
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = orders.slice(indexOfFirstItem, indexOfLastItem);
@@ -18,13 +18,14 @@ export const Order_Index = () => {
   const tb = "orders";
   useEffect(() => {
     setReRender(false);
-    ApiService.getAll(status == "All" ? tb : `${tb}/get/${status}`).then(
+    ApiController.getAll(status == "All" ? tb : `${tb}/get/${status}`).then(
       (res) => setOrders(res.data)
     );
   }, [reRender]);
   const changeOrderPP = (e) => setitemsPerPage(e);
   const changeStatus = (e) => {
-    setStauts(e.target.value);
+    setStatus(e.target.value);
+    setCurrentPage(1);
     setReRender(true);
   };
   const OrderDate = (date) => {
@@ -44,7 +45,7 @@ export const Order_Index = () => {
                 <h3 className="fs-5">All Orders</h3>
               </div>
               <div className="col-md-6">
-                <div className="float-end">
+                <div className="float-md-end">
                   <label className="h5">Set Orders Status By</label>
                   <select
                     onChange={changeStatus}
@@ -59,16 +60,18 @@ export const Order_Index = () => {
                 </div>
               </div>
             </div>
-            <table className="table">
+            <table className="table text-center text-md-start">
               <thead>
                 <tr>
                   <th>Nº</th>
-                  <th>S_Total</th>
-                  <th>Tax</th>
+                  <th className="d-none d-md-table-cell">S_Total</th>
+                  <th className="d-none d-md-table-cell">Tax</th>
                   <th>Total</th>
                   <th>Name</th>
                   <th>Tel</th>
-                  <th>{status == "All" ? "Status" : "Email"}</th>
+                  <th className="d-none d-md-table-cell">
+                    {status == "All" ? "Status" : "Email"}
+                  </th>
                   <th>Order Date</th>
                   <th>Actions</th>
                 </tr>
@@ -76,13 +79,20 @@ export const Order_Index = () => {
               <tbody>
                 {currentItems.map((order, i) => (
                   <tr key={order.id}>
-                    <th>{i + 1 + indexOfFirstItem}</th>
-                    <td>${order.subTotal.toFixed(2)}</td>
-                    <td>${order.tax.toFixed(2)}</td>
-                    <td>${order.totalPrice.toFixed(2)}</td>
+                    <td>{i + 1 + indexOfFirstItem}</td>
+                    <td className="d-none d-md-table-cell">
+                      $ {order.subTotal.toFixed(2)}
+                    </td>
+                    <td className="d-none d-md-table-cell">
+                      $ {order.tax.toFixed(2)}
+                    </td>
+                    <td>
+                      $
+                      {order.totalPrice.toFixed(2)}
+                    </td>
                     <td>{order.user ? order.user.name : ""}</td>
                     <td>{order.user ? order.user.phone : ""}</td>
-                    <td>
+                    <td className="d-none d-md-table-cell">
                       {status == "All"
                         ? order.status
                         : order.user
@@ -92,29 +102,34 @@ export const Order_Index = () => {
                     <td>{OrderDate(order.dateOrdered)}</td>
                     <td>
                       <Link
-                        to={`/order/order_detail/${order.id}`}
-                        className="btn btn-success bg-success btn-sm me-2"
+                        to={`/order/order_detail/${order.id}/order`}
+                        className="btn btn-success bg-success btn-sm m-2"
                         title="Order Detail"
                       >
                         <i className="fas fa-eye"></i>
                       </Link>
                       {/* View Order Detail */}
-                      <a
-                        onClick={() => {
-                          ApiService.updateStatus(tb, `${order.id}`);
-                          setReRender(true);
-                        }}
-                        className="btn btn-warning btn-sm me-2"
-                        title="Delivery Order"
-                      >
-                        <i className="fas fa-truck"></i>
-                      </a>
+                      {order.status == "Success" ? (
+                        ""
+                      ) : (
+                        <a
+                          onClick={() => {
+                            ApiController.updateStatus(tb, `${order.id}`);
+                            setReRender(true);
+                          }}
+                          className="btn btn-warning btn-sm m-2 text-light"
+                          title="Delivery Order"
+                        >
+                          <i className="fas fa-truck"></i>
+                        </a>
+                      )}
+
                       {/* Delivery Order */}
                       {order.status != "Ordered" ? (
                         ""
                       ) : (
                         <a
-                          className="btn btn-danger btn-sm"
+                          className="btn btn-primary btn-sm m-2"
                           title="Cancel Order"
                           onClick={() => {
                             Alart.alartDelete(tb, `${order.id}`);

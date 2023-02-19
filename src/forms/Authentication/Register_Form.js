@@ -17,9 +17,8 @@ export const Register_Form = () => {
     password: "",
   });
   const [navigate, setNavigate] = useState(false);
-  if (navigate) {
-    return <Navigate to="/" />;
-  }
+  if (navigate) return <Navigate to="/" />;
+  
   const submit = () => {
     if (user.name != "" && user.email != "" && user.password != "") {
       if (user.password == matchPass) {
@@ -101,9 +100,8 @@ export const Register_Form = () => {
                   <i
                     className={`fa ${
                       passwordShown ? "fa-eye-slash" : "fa-eye"
-                    } floatingPassword`}
+                    } floatingPassword mouse`}
                     style={{
-                      cursor: "pointer",
                       position: "absolute",
                       top: 25,
                       right: 20,
@@ -126,9 +124,8 @@ export const Register_Form = () => {
                   <i
                     className={`fa ${
                       repasswordShown ? "fa-eye-slash" : "fa-eye"
-                    } floatingPassword`}
+                    } floatingPassword mouse`}
                     style={{
-                      cursor: "pointer",
                       position: "absolute",
                       top: 25,
                       right: 20,
@@ -139,25 +136,13 @@ export const Register_Form = () => {
                   />
                   <label htmlFor="floatingPassword">Confirm Password</label>
                 </div>
-                <div className="d-flex align-items-center justify-content-between mb-4">
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="exampleCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                      Check me out
-                    </label>
-                  </div>
-                </div>
-                <button
+                <a
                   // type="submit"
                   onClick={() => submit()}
                   className="btn btn-primary py-3 w-100 mb-4"
                 >
                   Sign Up
-                </button>
+                </a>
               </form>
               <p className="text-center m-0">
                 Already have an Account? <Link to="/">Sign In</Link>

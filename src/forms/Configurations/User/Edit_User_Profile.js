@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./styles/user.css";
 import Alart from "../../../service/Alart";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 export const Edit_User_Profile = () => {
   const params = useParams();
   const [user, setUser] = useState([]);
   const [img, setImg] = useState();
   const [changed, setChanged] = useState(false);
   useEffect(() => {
-    ApiService.get("users", params.id).then((res) => setUser(res.data));
+    ApiController.get("users", params.id).then((res) => setUser(res.data));
   }, [params.id]);
   //edit new Image
   const hiddenImageUpload = React.useRef(null);
@@ -23,7 +23,7 @@ export const Edit_User_Profile = () => {
     setChanged(true);
   };
   //send data to api to update
-  const submit = async () => ApiService.update("users", params.id, user);
+  const submit = async () => ApiController.update("users", params.id, user);
   return (
     <div className="content open">
       <div className="container-fluid pt-4 px-4">
@@ -48,7 +48,7 @@ export const Edit_User_Profile = () => {
                       <Link
                         to={`/profile/${params.id}`}
                         onClick={() => submit()}
-                        className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold"
+                        className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold text-light"
                       >
                         <i className="fas fa-tools me-2" />
                         Update Profile
@@ -81,8 +81,7 @@ export const Edit_User_Profile = () => {
                     >
                       <label
                         onClick={handleClick}
-                        className="form-control"
-                        style={{ cursor: "pointer" }}
+                        className="form-control mouse"
                       >
                         Select Image
                       </label>
@@ -101,13 +100,12 @@ export const Edit_User_Profile = () => {
                         textAlign: "center",
                       }}
                     >
-                      <button
+                      <a
                         onClick={() => Alart.alartChangePassword(params.id)}
-                        className="form-control"
-                        style={{ cursor: "pointer" }}
+                        className="form-control mouse"
                       >
                         Change Password
-                      </button>
+                      </a>
                     </div>
                   </div>
 
@@ -118,7 +116,7 @@ export const Edit_User_Profile = () => {
                         className="form-control"
                         id="name"
                         placeholder="name"
-                        value={user.name||""}
+                        value={user.name || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -138,7 +136,7 @@ export const Edit_User_Profile = () => {
                         className="form-control"
                         id="email"
                         placeholder="email"
-                        value={user.email||""}
+                        value={user.email || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -158,7 +156,7 @@ export const Edit_User_Profile = () => {
                         className="form-control"
                         id="phone"
                         placeholder="phone"
-                        value={user.phone||""}
+                        value={user.phone || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -177,7 +175,7 @@ export const Edit_User_Profile = () => {
                         className="form-control"
                         id="date_of_birt"
                         placeholder="date_of_birth"
-                        value={user.DOB||""}
+                        value={user.DOB || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({
@@ -195,7 +193,7 @@ export const Edit_User_Profile = () => {
                       <textarea
                         className="form-control company-address"
                         placeholder="address"
-                        value={user.address||""}
+                        value={user.address || ""}
                         onChange={(e) => {
                           setChanged(true);
                           setUser({

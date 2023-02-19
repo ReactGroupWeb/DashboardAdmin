@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 import Swal from "sweetalert2";
 window.Swal = Swal;
 
@@ -11,7 +11,7 @@ export const Edit_Company = () => {
   const [company, setCompany] = useState([]);
   const [img, setImg] = useState();
   useEffect(() => {
-    ApiService.get(tb, params.id).then((res) => setCompany(res.data));
+    ApiController.get(tb, params.id).then((res) => setCompany(res.data));
   }, []);
   const alart = () => {
     if (changed) {
@@ -42,7 +42,7 @@ export const Edit_Company = () => {
     });
     setChanged(true);
   };
-  const submit = async () => ApiService.update(tb, params.id, company);
+  const submit = async () => ApiController.update(tb, params.id, company);
   return (
     <>
       <div className="content open">
@@ -68,7 +68,7 @@ export const Edit_Company = () => {
                         <Link
                           to="/company"
                           onClick={() => submit()}
-                          className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold"
+                          className="btn btn-warning bg-warning btn-sm float-end px-4 py-2 me-2 fw-bold text-light"
                         >
                           <i className="fas fa-tools me-2" />
                           Update
@@ -87,7 +87,7 @@ export const Edit_Company = () => {
                           type="text"
                           className="form-control"
                           id="name"
-                          value={company.name||""}
+                          value={company.name || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -106,7 +106,7 @@ export const Edit_Company = () => {
                           type="email"
                           className="form-control"
                           id="email"
-                          value={company.email||""}
+                          value={company.email || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -125,7 +125,7 @@ export const Edit_Company = () => {
                           type="text"
                           className="form-control"
                           id="phone"
-                          value={company.telephone||""}
+                          value={company.telephone || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -144,7 +144,7 @@ export const Edit_Company = () => {
                           type="text"
                           className="form-control"
                           id="facebook"
-                          value={company.facebook||""}
+                          value={company.facebook || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -165,7 +165,7 @@ export const Edit_Company = () => {
                           type="text"
                           className="form-control"
                           id="twiiter"
-                          value={company.twitter||""}
+                          value={company.twitter || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -184,7 +184,7 @@ export const Edit_Company = () => {
                           type="text"
                           className="form-control"
                           id="telegram"
-                          value={company.telegram||""}
+                          value={company.telegram || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -201,7 +201,7 @@ export const Edit_Company = () => {
                         </label>
                         <textarea
                           className="form-control company-address"
-                          value={company.address||""}
+                          value={company.address || ""}
                           onChange={(e) => {
                             setCompany({
                               ...company,
@@ -225,8 +225,7 @@ export const Edit_Company = () => {
                         >
                           <label
                             onClick={handleClick}
-                            className="form-control"
-                            style={{ cursor: "pointer" }}
+                            className="form-control mouse"
                           >
                             Change Image
                           </label>

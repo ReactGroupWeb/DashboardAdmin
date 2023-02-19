@@ -1,0 +1,32 @@
+.rbc-row {
+    display: flex;
+    justify-items: center;
+    justify-content: space-around;
+}
+.rbc-calendar {
+    text-align: center;
+}
+.rbc-month-row {
+    margin: 5px auto;
+}
+span.rbc-toolbar-label {
+    display: block;
+}
+.rbc-btn-group:nth-child(2) {
+    display: none !important;
+}
+.rbc-date-cell.rbc-now.rbc-current button,.rbc-header.rbc-today button {
+    background: green;
+    color: #fff;
+    border-color: #fff;
+}
+.rbc-time-gutter.rbc-time-column {
+    display: flex;
+    flex-wrap: wrap;
+}
+.rbc-timeslot-group {
+    width: 50%;
+}
+.rbc-toolbar {
+    margin: 10px;
+}

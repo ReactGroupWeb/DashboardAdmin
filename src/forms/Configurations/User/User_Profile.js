@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./styles/user.css";
-import ApiService from "../../../service/api-service";
+import ApiController from "../../../service/Controller";
 
 export const User_Profile = () => {
   const params = useParams();
   const [user, setUser] = useState([]);
   //getting all data from tbProduct and tbCategory
   useEffect(() => {
-    ApiService.get("users", params.id).then((res) => setUser(res.data));
+    ApiController.get("users", params.id).then((res) => setUser(res.data));
   }, []);
   return (
     <>
@@ -54,7 +54,7 @@ export const User_Profile = () => {
                       <div className="form-floating mb-3">
                         <input
                           type="text"
-                          className="form-control text-dark"
+                          className="form-control text-light"
                           value={`${user.phone}`}
                           placeholder="phone"
                           disabled
@@ -65,7 +65,7 @@ export const User_Profile = () => {
                       <div className="form-floating mb-3">
                         <input
                           type="text"
-                          className="form-control text-dark"
+                          className="form-control text-light"
                           value={`${user.DOB}`}
                           placeholder="date_of_birt"
                           disabled
@@ -76,7 +76,7 @@ export const User_Profile = () => {
                       <div className="form-floating mb-3">
                         <input
                           type="text"
-                          className="form-control text-dark"
+                          className="form-control text-light"
                           value={`${user.email}`}
                           placeholder="email"
                           disabled
@@ -86,7 +86,7 @@ export const User_Profile = () => {
 
                       <div className="form-floating mb-3">
                         <textarea
-                          className="form-control text-dark company-address"
+                          className="form-control text-light company-address"
                           placeholder="address"
                           disabled
                           value={`${user.address}`}
